@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}BookStore Gateway{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #121a31;
+      --card-2: #1a2547;
+      --text: #e9eeff;
+      --muted: #9da8cc;
+      --primary: #6d8dff;
+      --accent: #60d5ba;
+      --danger: #ff7a90;
+      --warning: #fbcf4a;
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 10px 25px rgba(0, 0, 0, .35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(1200px 400px at 10% -10%, #273972 0%, transparent 50%),
+                  radial-gradient(900px 350px at 90% -10%, #1c6558 0%, transparent 50%),
+                  var(--bg);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(11,16,32,0.75);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .2px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .brand-badge {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: var(--shadow);
+      font-weight: 800;
+      color: #041020;
+    }
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .grid { display: grid; gap: 16px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    @media (max-width: 900px) {
+      .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; }
+    }
+    h1 { margin: 8px 0 10px; font-size: 28px; }
+    h2 { margin: 8px 0; font-size: 20px; }
+    p.muted, .muted { color: var(--muted); }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+    }
+    .table { width: 100%; border-collapse: collapse; }
+    .table th, .table td {
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      padding: 10px 8px;
+      font-size: 14px;
+    }
+    .table th { color: var(--muted); font-weight: 600; }
+    .btn {
+      display: inline-block;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--primary), #85a0ff);
+      color: white;
+    }
+    .btn.secondary { background: linear-gradient(135deg, #2f3f73, #3b4d89); }
+    input, select, textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      outline: none;
+    }
+    label { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .field { display: grid; gap: 8px; margin-bottom: 14px; }
+    pre {
+      overflow: auto;
+      background: #0b1225;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      color: #b8f3d9;
+    }
+    .ok { color: var(--accent); }
+    .bad { color: var(--danger); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="header-row">
+      <a class="brand" href="/books/">
+        <span class="brand-badge">BS</span>
+        <span>BookStore Gateway</span>
+      </a>
+      <nav class="nav">
+        <a href="/books/">Books</a>
+        <a href="/orders/create/">Create Order</a>
+        <a href="/recommendations/">Recommendations</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

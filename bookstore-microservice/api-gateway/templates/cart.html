@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Cart | BookStore Gateway{% endblock %}
+{% block content %}
+{% if error %}<div class="card" style="border-color: rgba(255,122,144,.4); margin-bottom:16px;"><p class="bad">Service warning: {{ error }}</p></div>{% endif %}
+<div class="card" style="margin-bottom:16px;">
+  <h1>Customer Cart</h1>
+  <p class="muted">Giỏ hàng của customer <strong>#{{ customer_id }}</strong> từ <code>cart-service</code>.</p>
+</div>
+
+<div class="card">
+{% if cart %}
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+    <span class="pill">Cart ID: {{ cart.id }}</span>
+    <a class="btn" href="/orders/create/">Create Order</a>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Cart Item ID</th>
+        <th>Book ID</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart.items %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.book_id }}</td>
+        <td>{{ item.quantity }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3" class="muted">Cart is empty.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="bad">Cart not found.</p>
+{% endif %}
+</div>
+{% endblock %}
