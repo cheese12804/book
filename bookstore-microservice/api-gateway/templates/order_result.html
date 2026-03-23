@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Order Result | BookStore Gateway{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Order Result</h1>
+  <p>
+    HTTP Status:
+    {% if status_code >= 200 and status_code < 300 %}
+      <strong class="ok">{{ status_code }}</strong>
+    {% else %}
+      <strong class="bad">{{ status_code }}</strong>
+    {% endif %}
+  </p>
+  <pre>{{ result|safe }}</pre>
+  <div style="display:flex; gap:10px; margin-top: 14px;">
+    <a class="btn" href="/orders/create/">Create Another Order</a>
+    <a class="btn secondary" href="/books/">Back to Books</a>
+  </div>
+</div>
+{% endblock %}

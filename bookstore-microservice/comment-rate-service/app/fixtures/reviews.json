@@ -1,0 +1,7 @@
+[
+  {"model": "app.commentrate", "pk": 1, "fields": {"customer_id": 1, "book_id": 1, "rating": 5, "comment": "Rất dễ hiểu cho người mới."}},
+  {"model": "app.commentrate", "pk": 2, "fields": {"customer_id": 1, "book_id": 2, "rating": 4, "comment": "Nội dung thực tế, áp dụng tốt."}},
+  {"model": "app.commentrate", "pk": 3, "fields": {"customer_id": 2, "book_id": 4, "rating": 5, "comment": "Sách kinh điển về coding."}},
+  {"model": "app.commentrate", "pk": 4, "fields": {"customer_id": 2, "book_id": 6, "rating": 4, "comment": "Phù hợp để luyện system design."}},
+  {"model": "app.commentrate", "pk": 5, "fields": {"customer_id": 1, "book_id": 9, "rating": 5, "comment": "Rất hữu ích cho microservices."}}
+]

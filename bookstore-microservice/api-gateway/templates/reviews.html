@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Book Reviews | BookStore Gateway{% endblock %}
+{% block content %}
+{% if error %}<div class="card" style="border-color: rgba(255,122,144,.4); margin-bottom:16px;"><p class="bad">Service warning: {{ error }}</p></div>{% endif %}
+<div class="card" style="margin-bottom:16px;">
+  <h1>Reviews for Book #{{ book_id }}</h1>
+  <p class="muted">Đánh giá lấy từ <code>comment-rate-service</code>.</p>
+</div>
+<div class="grid cols-2">
+  {% for r in reviews %}
+  <article class="card">
+    <span class="pill">Customer #{{ r.customer_id }}</span>
+    <h2>Rating: {{ r.rating }}/5</h2>
+    <p>{{ r.comment|default:"(No comment)" }}</p>
+  </article>
+  {% empty %}
+  <div class="card"><p class="muted">No reviews yet.</p></div>
+  {% endfor %}
+</div>
+{% endblock %}

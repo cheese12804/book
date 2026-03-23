@@ -1,0 +1,3 @@
+[
+  {"model": "app.manager", "pk": 1, "fields": {"name": "Mia Le", "email": "mia.manager@bookstore.com", "level": "manager"}}
+]
