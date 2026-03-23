@@ -55,6 +55,16 @@ docker compose run --rm recommender-ai-service python manage.py migrate
 docker compose run --rm api-gateway python manage.py migrate
 ```
 
+
+## Seed data tự động
+- `staff-service`: load `app/fixtures/staffs.json` (2 staff).
+- `manager-service`: load `app/fixtures/managers.json` (1 manager).
+- `book-service`: load `app/fixtures/books.json` (10 books).
+- `customer-service`: chạy `seed_customer.py` tạo 2 customer và gọi `cart-service` tạo cart tương ứng.
+- `catalog-service`: chạy `seed_catalog.py` tạo 2 catalog và gán book bằng validate qua `book-service`.
+- `comment-rate-service`: load `app/fixtures/reviews.json` (>=5 review).
+- `cart-service`, `order-service`: không seed trực tiếp (theo flow nghiệp vụ).
+
 ## 6. Danh sách endpoint chính
 - staff-service: `/staffs/`, `/staffs/<id>/`
 - manager-service: `/managers/`, `/managers/<id>/`
@@ -89,6 +99,17 @@ docker compose run --rm api-gateway python manage.py migrate
 - Nhóm B: book/catalog/cart
 - Nhóm C: order/pay/ship
 - Nhóm D: comment-rate/recommender/api-gateway + tích hợp compose
+
+
+## Verify seed nhanh
+```bash
+curl http://localhost:8005/books/
+curl http://localhost:8003/customers/
+curl http://localhost:8006/carts/1/
+curl http://localhost:8006/carts/2/
+curl http://localhost:8004/catalogs/
+curl http://localhost:8010/reviews/
+```
 
 ## Ví dụ nhanh endpoint
 ```bash

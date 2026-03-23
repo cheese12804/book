@@ -1,0 +1,12 @@
+[
+  {"model": "app.book", "pk": 1, "fields": {"title": "Django for Beginners", "author": "William S. Vincent", "price": "19.99", "stock": 120, "description": "Intro to Django web development.", "created_by_staff_id": 1}},
+  {"model": "app.book", "pk": 2, "fields": {"title": "Two Scoops of Django", "author": "Daniel Roy Greenfeld", "price": "29.50", "stock": 80, "description": "Best practices for Django projects.", "created_by_staff_id": 1}},
+  {"model": "app.book", "pk": 3, "fields": {"title": "Python Crash Course", "author": "Eric Matthes", "price": "24.00", "stock": 100, "description": "Hands-on Python fundamentals.", "created_by_staff_id": 2}},
+  {"model": "app.book", "pk": 4, "fields": {"title": "Clean Code", "author": "Robert C. Martin", "price": "31.20", "stock": 55, "description": "Classic software craftsmanship guide.", "created_by_staff_id": 2}},
+  {"model": "app.book", "pk": 5, "fields": {"title": "Designing Data-Intensive Applications", "author": "Martin Kleppmann", "price": "39.90", "stock": 45, "description": "Scalable data systems design.", "created_by_staff_id": 1}},
+  {"model": "app.book", "pk": 6, "fields": {"title": "System Design Interview", "author": "Alex Xu", "price": "27.80", "stock": 90, "description": "System design concepts and examples.", "created_by_staff_id": 1}},
+  {"model": "app.book", "pk": 7, "fields": {"title": "Refactoring", "author": "Martin Fowler", "price": "33.40", "stock": 65, "description": "Improving design of existing code.", "created_by_staff_id": 2}},
+  {"model": "app.book", "pk": 8, "fields": {"title": "The Pragmatic Programmer", "author": "Andrew Hunt", "price": "28.60", "stock": 70, "description": "Practical software engineering wisdom.", "created_by_staff_id": 2}},
+  {"model": "app.book", "pk": 9, "fields": {"title": "Microservices Patterns", "author": "Chris Richardson", "price": "35.75", "stock": 50, "description": "Patterns for microservices architecture.", "created_by_staff_id": 1}},
+  {"model": "app.book", "pk": 10, "fields": {"title": "REST API Design Rulebook", "author": "Mark Masse", "price": "22.10", "stock": 95, "description": "Concise REST API design principles.", "created_by_staff_id": 1}}
+]
