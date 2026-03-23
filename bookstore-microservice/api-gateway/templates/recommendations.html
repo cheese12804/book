@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Recommendations | BookStore Gateway{% endblock %}
+{% block content %}
+{% if error %}<div class="card" style="border-color: rgba(255,122,144,.4); margin-bottom:16px;"><p class="bad">Service warning: {{ error }}</p></div>{% endif %}
+<div class="card" style="margin-bottom:16px;">
+  <h1>Top Recommendations</h1>
+  <p class="muted">Gợi ý học thuật từ <code>recommender-ai-service</code> dựa trên rating/review count.</p>
+</div>
+<div class="grid cols-3">
+{% for r in recommendations %}
+  <article class="card">
+    <span class="pill">Book #{{ r.book.id }}</span>
+    <h2>{{ r.book.title }}</h2>
+    <p class="muted">{{ r.book.author }}</p>
+    <p style="font-weight:700; margin: 6px 0;">Avg rating: {{ r.avg_rating }}</p>
+    <p class="muted">Reviews: {{ r.review_count }}</p>
+  </article>
+{% empty %}
+  <div class="card"><p class="muted">No recommendations.</p></div>
+{% endfor %}
+</div>
+{% endblock %}

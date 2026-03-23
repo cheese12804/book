@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Books | BookStore Gateway{% endblock %}
+{% block content %}
+{% if error %}<div class="card" style="border-color: rgba(255,122,144,.4); margin-bottom:16px;"><p class="bad">Service warning: {{ error }}</p></div>{% endif %}
+<div class="card" style="margin-bottom:16px;">
+  <h1>Book Catalog</h1>
+  <p class="muted">Danh sách sách lấy trực tiếp từ <code>book-service</code>.</p>
+</div>
+<div class="grid cols-3">
+  {% for b in books %}
+  <article class="card">
+    <span class="pill">Book #{{ b.id }}</span>
+    <h2>{{ b.title }}</h2>
+    <p class="muted">Author: {{ b.author }}</p>
+    <p style="font-size:24px; font-weight:800; margin: 8px 0;">${{ b.price }}</p>
+    <p class="muted">Stock: {{ b.stock }}</p>
+    <div style="display:flex; gap:8px; margin-top: 14px;">
+      <a class="btn secondary" href="/reviews/book/{{ b.id }}/">Reviews</a>
+      <a class="btn" href="/cart/1/">View Cart #1</a>
+    </div>
+  </article>
+  {% empty %}
+  <div class="card"><p class="muted">No books found.</p></div>
+  {% endfor %}
+</div>
+{% endblock %}
