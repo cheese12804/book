@@ -1,40 +1,59 @@
 {% extends 'base.html' %}
 {% block title %}Cart | BookStore Gateway{% endblock %}
 {% block content %}
-{% if error %}<div class="card" style="border-color: rgba(255,122,144,.4); margin-bottom:16px;"><p class="bad">Service warning: {{ error }}</p></div>{% endif %}
-<div class="card" style="margin-bottom:16px;">
-  <h1>Customer Cart</h1>
-  <p class="muted">Giỏ hàng của customer <strong>#{{ customer_id }}</strong> từ <code>cart-service</code>.</p>
-</div>
+<h2 class="mb-3">Your Cart - Customer #{{ customer_id }}</h2>
+{% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
 
-<div class="card">
-{% if cart %}
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-    <span class="pill">Cart ID: {{ cart.id }}</span>
-    <a class="btn" href="/orders/create/">Create Order</a>
+{% if items %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    {% for item in items %}
+      <div class="card mb-3"><div class="card-body">
+        <div class="row align-items-center g-3">
+          <div class="col-3 col-md-2"><img src="{{ item.image }}" class="img-fluid rounded" alt="book"></div>
+          <div class="col-9 col-md-4">
+            <h6 class="mb-1">{{ item.book.title|default:'Unknown Book' }}</h6>
+            <div class="small text-muted">Book ID: {{ item.book_id }}</div>
+            <div class="fw-semibold text-primary">${{ item.price }}</div>
+          </div>
+          <div class="col-md-3">
+            <form method="post" action="{% url 'cart-item-update' item.id %}" class="d-flex gap-1">
+              {% csrf_token %}
+              <input type="hidden" name="customer_id" value="{{ customer_id }}">
+              <input type="hidden" name="current_quantity" value="{{ item.quantity }}">
+              <button class="btn btn-outline-secondary btn-sm" name="action" value="decrease">-</button>
+              <input type="number" class="form-control form-control-sm" name="quantity" min="1" value="{{ item.quantity }}">
+              <button class="btn btn-outline-secondary btn-sm" name="action" value="increase">+</button>
+              <button class="btn btn-primary btn-sm" name="action" value="update">Update</button>
+            </form>
+          </div>
+          <div class="col-md-2 text-md-end">
+            <div class="fw-bold mb-2">${{ item.subtotal }}</div>
+            <form method="post" action="{% url 'cart-item-delete' item.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="customer_id" value="{{ customer_id }}">
+              <button class="btn btn-outline-danger btn-sm">Remove</button>
+            </form>
+          </div>
+        </div>
+      </div></div>
+    {% endfor %}
   </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Cart Item ID</th>
-        <th>Book ID</th>
-        <th>Quantity</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in cart.items %}
-      <tr>
-        <td>{{ item.id }}</td>
-        <td>{{ item.book_id }}</td>
-        <td>{{ item.quantity }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="3" class="muted">Cart is empty.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
-  <p class="bad">Cart not found.</p>
-{% endif %}
+
+  <div class="col-lg-4">
+    <div class="card"><div class="card-body">
+      <h5>Summary</h5>
+      <div class="d-flex justify-content-between"><span>Total Items</span><strong>{{ total_items }}</strong></div>
+      <div class="d-flex justify-content-between mb-3"><span>Total Amount</span><strong>${{ total_amount }}</strong></div>
+      <a class="btn btn-warning w-100" href="{% url 'checkout' %}">Proceed to Checkout</a>
+    </div></div>
+  </div>
 </div>
+{% else %}
+<div class="empty-state card p-5 text-center">
+  <h5>Giỏ hàng đang trống</h5>
+  <p class="text-muted">Hãy thêm vài cuốn sách trước khi checkout.</p>
+  <a class="btn btn-primary" href="{% url 'books' %}">Continue Shopping</a>
+</div>
+{% endif %}
 {% endblock %}

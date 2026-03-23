@@ -2,19 +2,41 @@
 {% block title %}Order Result | BookStore Gateway{% endblock %}
 {% block content %}
 <div class="card">
-  <h1>Order Result</h1>
-  <p>
-    HTTP Status:
-    {% if status_code >= 200 and status_code < 300 %}
-      <strong class="ok">{{ status_code }}</strong>
+  <div class="card-body">
+    <h3 class="mb-3">Order Result</h3>
+    {% if success %}
+      <div class="alert alert-success">Order created successfully.</div>
     {% else %}
-      <strong class="bad">{{ status_code }}</strong>
+      <div class="alert alert-danger">Order failed. Please check details below.</div>
     {% endif %}
-  </p>
-  <pre>{{ result|safe }}</pre>
-  <div style="display:flex; gap:10px; margin-top: 14px;">
-    <a class="btn" href="/orders/create/">Create Another Order</a>
-    <a class="btn secondary" href="/books/">Back to Books</a>
+
+    <div class="row g-2 small mb-3">
+      <div class="col-md-4"><strong>HTTP:</strong> {{ status_code }}</div>
+      <div class="col-md-4"><strong>Order ID:</strong> {{ result.id|default:'-' }}</div>
+      <div class="col-md-4"><strong>Customer ID:</strong> {{ result.customer_id|default:'-' }}</div>
+      <div class="col-md-4"><strong>Total:</strong> ${{ result.total_amount|default:'-' }}</div>
+      <div class="col-md-4"><strong>Pay:</strong> {{ result.pay_method|default:'-' }}</div>
+      <div class="col-md-4"><strong>Ship:</strong> {{ result.ship_method|default:'-' }}</div>
+      <div class="col-12"><strong>Address:</strong> {{ result.shipping_address|default:'-' }}</div>
+      <div class="col-12"><strong>Status:</strong> {{ result.status|default:'-' }}</div>
+    </div>
+
+    {% if items %}
+      <h6>Items</h6>
+      <ul class="list-group mb-3">
+        {% for it in items %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Book #{{ it.book_id }} x {{ it.quantity }}</span>
+            <strong>${{ it.price }}</strong>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <div class="d-flex gap-2">
+      <a class="btn btn-primary" href="{% url 'books' %}">Continue Shopping</a>
+      <a class="btn btn-outline-secondary" href="{% url 'recommendations' %}">View Recommendations</a>
+    </div>
   </div>
 </div>
 {% endblock %}

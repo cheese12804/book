@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Admin Lite | BookStore Gateway{% endblock %}
+{% block content %}
+<h2 class="mb-3">Admin Lite - Quick Demo Setup</h2>
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card"><div class="card-body">
+      <h5 class="mb-3">Add Book</h5>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="book">
+        <div class="mb-2"><label class="form-label">Title</label>{{ book_form.title }}</div>
+        <div class="mb-2"><label class="form-label">Author</label>{{ book_form.author }}</div>
+        <div class="row g-2">
+          <div class="col-md-6"><label class="form-label">Price</label>{{ book_form.price }}</div>
+          <div class="col-md-6"><label class="form-label">Stock</label>{{ book_form.stock }}</div>
+        </div>
+        <div class="mb-2"><label class="form-label">Description</label>{{ book_form.description }}</div>
+        <div class="row g-2">
+          <div class="col-md-6"><label class="form-label">Staff ID</label>{{ book_form.created_by_staff_id }}</div>
+          <div class="col-md-6"><label class="form-label">Image URL</label>{{ book_form.image_url }}</div>
+        </div>
+        <button class="btn btn-primary mt-2">Add Book</button>
+      </form>
+    </div></div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card"><div class="card-body">
+      <h5 class="mb-3">Add Customer</h5>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="customer">
+        <div class="mb-2"><label class="form-label">Name</label>{{ customer_form.name }}</div>
+        <div class="mb-2"><label class="form-label">Email</label>{{ customer_form.email }}</div>
+        <div class="mb-2"><label class="form-label">Address</label>{{ customer_form.address }}</div>
+        <button class="btn btn-success">Add Customer</button>
+      </form>
+    </div></div>
+
+    <div class="card mt-3"><div class="card-body">
+      <h6>Service quick links</h6>
+      <ul class="mb-0">
+        {% for name, link in service_links.items %}
+          <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

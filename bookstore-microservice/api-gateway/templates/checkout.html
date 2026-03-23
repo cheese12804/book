@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Checkout | BookStore Gateway{% endblock %}
+{% block content %}
+<h2 class="mb-3">Checkout / Create Order</h2>
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card"><div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Customer ID</label>
+          {{ form.customer_id }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Shipping Address</label>
+          {{ form.shipping_address }}
+        </div>
+        <div class="row g-2">
+          <div class="col-md-6">
+            <label class="form-label">Pay Method</label>
+            {{ form.pay_method }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Ship Method</label>
+            {{ form.ship_method }}
+          </div>
+        </div>
+        <button class="btn btn-warning mt-3">Confirm Order</button>
+      </form>
+    </div></div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card"><div class="card-body">
+      <h5>Order Summary</h5>
+      {% if cart_error %}<div class="alert alert-warning py-2">{{ cart_error }}</div>{% endif %}
+      {% for item in items %}
+        <div class="d-flex justify-content-between small border-bottom py-2">
+          <span>{{ item.book.title|default:item.book_id }} x {{ item.quantity }}</span>
+          <strong>${{ item.subtotal }}</strong>
+        </div>
+      {% empty %}
+        <p class="text-muted">No cart items.</p>
+      {% endfor %}
+      <div class="d-flex justify-content-between mt-2">
+        <span>Total items</span><strong>{{ total_items }}</strong>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span>Total amount</span><strong>${{ total_amount }}</strong>
+      </div>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

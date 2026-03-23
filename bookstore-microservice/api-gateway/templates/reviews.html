@@ -1,20 +1,39 @@
 {% extends 'base.html' %}
-{% block title %}Book Reviews | BookStore Gateway{% endblock %}
+{% block title %}Reviews | BookStore Gateway{% endblock %}
 {% block content %}
-{% if error %}<div class="card" style="border-color: rgba(255,122,144,.4); margin-bottom:16px;"><p class="bad">Service warning: {{ error }}</p></div>{% endif %}
-<div class="card" style="margin-bottom:16px;">
-  <h1>Reviews for Book #{{ book_id }}</h1>
-  <p class="muted">Đánh giá lấy từ <code>comment-rate-service</code>.</p>
-</div>
-<div class="grid cols-2">
-  {% for r in reviews %}
-  <article class="card">
-    <span class="pill">Customer #{{ r.customer_id }}</span>
-    <h2>Rating: {{ r.rating }}/5</h2>
-    <p>{{ r.comment|default:"(No comment)" }}</p>
-  </article>
-  {% empty %}
-  <div class="card"><p class="muted">No reviews yet.</p></div>
-  {% endfor %}
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card"><div class="card-body">
+      <h4 class="mb-3">Reviews - {{ book.title|default:'Book' }}</h4>
+      {% if book_error %}<div class="alert alert-warning py-2">{{ book_error }}</div>{% endif %}
+      <p class="mb-3">Average rating: <span class="badge text-bg-warning">{{ avg_rating }}/5</span></p>
+
+      {% for r in reviews %}
+        <div class="review-item mb-3">
+          <div class="d-flex justify-content-between">
+            <strong>Customer #{{ r.customer_id }}</strong>
+            <span class="badge text-bg-warning">{{ r.rating }}/5</span>
+          </div>
+          <div class="text-muted small">{{ r.comment|default:'(No comment)' }}</div>
+        </div>
+      {% empty %}
+        <p class="text-muted">No reviews yet.</p>
+      {% endfor %}
+    </div></div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card"><div class="card-body">
+      <h5>Add Review</h5>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-2"><label class="form-label">Customer ID</label>{{ form.customer_id }}</div>
+        <div class="mb-2"><label class="form-label">Rating (1-5)</label>{{ form.rating }}</div>
+        <div class="mb-2"><label class="form-label">Comment</label>{{ form.comment }}</div>
+        <button class="btn btn-primary">Submit Review</button>
+      </form>
+      {% if review_error %}<p class="small text-danger mt-2">{{ review_error }}</p>{% endif %}
+    </div></div>
+  </div>
 </div>
 {% endblock %}
