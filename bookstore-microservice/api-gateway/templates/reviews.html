@@ -27,8 +27,7 @@
       <h5>Add Review</h5>
       <form method="post">
         {% csrf_token %}
-        <div class="mb-2"><label class="form-label">Customer ID</label>{{ form.customer_id }}</div>
-        <div class="mb-2"><label class="form-label">Rating (1-5)</label>{{ form.rating }}</div>
+                <div class="mb-2"><label class="form-label">Rating (1-5)</label>{{ form.rating }}</div>
         <div class="mb-2"><label class="form-label">Comment</label>{{ form.comment }}</div>
         <button class="btn btn-primary">Submit Review</button>
       </form>

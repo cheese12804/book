@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Cart | BookStore Gateway{% endblock %}
 {% block content %}
-<h2 class="mb-3">Your Cart - Customer #{{ customer_id }}</h2>
+<h2 class="mb-3">Your Cart</h2>
 {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
 
 {% if items %}
@@ -19,8 +19,7 @@
           <div class="col-md-3">
             <form method="post" action="{% url 'cart-item-update' item.id %}" class="d-flex gap-1">
               {% csrf_token %}
-              <input type="hidden" name="customer_id" value="{{ customer_id }}">
-              <input type="hidden" name="current_quantity" value="{{ item.quantity }}">
+                            <input type="hidden" name="current_quantity" value="{{ item.quantity }}">
               <button class="btn btn-outline-secondary btn-sm" name="action" value="decrease">-</button>
               <input type="number" class="form-control form-control-sm" name="quantity" min="1" value="{{ item.quantity }}">
               <button class="btn btn-outline-secondary btn-sm" name="action" value="increase">+</button>
@@ -31,8 +30,7 @@
             <div class="fw-bold mb-2">${{ item.subtotal }}</div>
             <form method="post" action="{% url 'cart-item-delete' item.id %}">
               {% csrf_token %}
-              <input type="hidden" name="customer_id" value="{{ customer_id }}">
-              <button class="btn btn-outline-danger btn-sm">Remove</button>
+                            <button class="btn btn-outline-danger btn-sm">Remove</button>
             </form>
           </div>
         </div>

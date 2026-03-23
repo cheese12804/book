@@ -19,8 +19,7 @@
             <a class="btn btn-outline-primary btn-sm" href="{% url 'book-detail' r.book.id %}">View Details</a>
             <form method="post" action="{% url 'cart-add' %}">
               {% csrf_token %}
-              <input type="hidden" name="customer_id" value="1">
-              <input type="hidden" name="book_id" value="{{ r.book.id }}">
+                            <input type="hidden" name="book_id" value="{{ r.book.id }}">
               <input type="hidden" name="quantity" value="1">
               <input type="hidden" name="next" value="{{ request.path }}">
               <button class="btn btn-warning btn-sm">Add to Cart</button>

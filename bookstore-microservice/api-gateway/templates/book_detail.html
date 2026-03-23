@@ -17,8 +17,7 @@
 
     <form method="post" action="{% url 'cart-add' %}" class="row g-2 align-items-end">
       {% csrf_token %}
-      <input type="hidden" name="customer_id" value="1">
-      <input type="hidden" name="book_id" value="{{ book.id }}">
+            <input type="hidden" name="book_id" value="{{ book.id }}">
       <input type="hidden" name="next" value="{{ request.path }}">
       <div class="col-auto">
         <label class="form-label">Quantity</label>
@@ -28,7 +27,7 @@
         <button class="btn btn-warning">Add to Cart</button>
       </div>
       <div class="col-auto">
-        <a class="btn btn-outline-primary" href="{% url 'cart' 1 %}">Go to Cart</a>
+        <a class="btn btn-outline-primary" href="{% url 'cart' %}">Go to Cart</a>
       </div>
     </form>
   </div>
