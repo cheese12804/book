@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Home | BookStore Gateway{% endblock %}
+{% block content %}
+<section class="hero rounded-4 p-4 p-md-5 mb-4 text-white">
+  <h1 class="display-6 fw-bold">BookStore Microservice Demo</h1>
+  <p class="lead mb-4">Website demo cho Assignment 05 với auth + role-based access.</p>
+  <div class="d-flex gap-2 flex-wrap">
+    {% if current_role == 'customer' %}
+      <a href="{% url 'books' %}" class="btn btn-warning btn-lg">Browse Books</a>
+      <a href="{% url 'cart' %}" class="btn btn-outline-light btn-lg">View Cart</a>
+    {% elif current_role == 'staff' %}
+      <a href="{% url 'staff-dashboard' %}" class="btn btn-warning btn-lg">Go Staff Dashboard</a>
+    {% else %}
+      <a href="{% url 'register' %}" class="btn btn-warning btn-lg">Register Customer</a>
+      <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">Login</a>
+    {% endif %}
+  </div>
+</section>
+
+<div class="row g-3">
+  <div class="col-md-4"><div class="card stat-card"><div class="card-body"><h6>Total Books</h6><h3>{{ metrics.book_count }}</h3>{% if book_error %}<p class="text-danger small mb-0">{{ book_error }}</p>{% endif %}</div></div></div>
+  <div class="col-md-4"><div class="card stat-card"><div class="card-body"><h6>Total Reviews</h6><h3>{{ metrics.review_count }}</h3>{% if review_error %}<p class="text-danger small mb-0">{{ review_error }}</p>{% endif %}</div></div></div>
+  <div class="col-md-4"><div class="card stat-card"><div class="card-body"><h6>Your Cart Items</h6><h3>{{ metrics.cart_items }}</h3>{% if cart_error %}<p class="text-danger small mb-0">{{ cart_error }}</p>{% endif %}</div></div></div>
+</div>
+{% endblock %}

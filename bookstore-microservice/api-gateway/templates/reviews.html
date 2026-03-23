@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Reviews | BookStore Gateway{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card"><div class="card-body">
+      <h4 class="mb-3">Reviews - {{ book.title|default:'Book' }}</h4>
+      {% if book_error %}<div class="alert alert-warning py-2">{{ book_error }}</div>{% endif %}
+      <p class="mb-3">Average rating: <span class="badge text-bg-warning">{{ avg_rating }}/5</span></p>
+
+      {% for r in reviews %}
+        <div class="review-item mb-3">
+          <div class="d-flex justify-content-between">
+            <strong>Customer #{{ r.customer_id }}</strong>
+            <span class="badge text-bg-warning">{{ r.rating }}/5</span>
+          </div>
+          <div class="text-muted small">{{ r.comment|default:'(No comment)' }}</div>
+        </div>
+      {% empty %}
+        <p class="text-muted">No reviews yet.</p>
+      {% endfor %}
+    </div></div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card"><div class="card-body">
+      <h5>Add Review</h5>
+      <form method="post">
+        {% csrf_token %}
+                <div class="mb-2"><label class="form-label">Rating (1-5)</label>{{ form.rating }}</div>
+        <div class="mb-2"><label class="form-label">Comment</label>{{ form.comment }}</div>
+        <button class="btn btn-primary">Submit Review</button>
+      </form>
+      {% if review_error %}<p class="small text-danger mt-2">{{ review_error }}</p>{% endif %}
+    </div></div>
+  </div>
+</div>
+{% endblock %}

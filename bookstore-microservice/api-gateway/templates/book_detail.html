@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Book Detail | BookStore Gateway{% endblock %}
+{% block content %}
+{% if error or not book %}
+  <div class="alert alert-danger">{{ error|default:'Book not found.' }}</div>
+{% else %}
+<div class="row g-4">
+  <div class="col-md-5">
+    <img src="{{ book.display_image }}" class="img-fluid rounded shadow-sm detail-cover" alt="{{ book.title }}">
+  </div>
+  <div class="col-md-7">
+    <h2 class="fw-bold">{{ book.title }}</h2>
+    <p class="text-muted mb-2">By {{ book.author }}</p>
+    <h3 class="text-primary">${{ book.price }}</h3>
+    <p class="mb-2">Stock: <strong>{{ book.stock }}</strong></p>
+    <p>{{ book.description|default:'No description' }}</p>
+
+    <form method="post" action="{% url 'cart-add' %}" class="row g-2 align-items-end">
+      {% csrf_token %}
+            <input type="hidden" name="book_id" value="{{ book.id }}">
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <div class="col-auto">
+        <label class="form-label">Quantity</label>
+        <input class="form-control" type="number" name="quantity" value="1" min="1" style="width:100px;">
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-warning">Add to Cart</button>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-outline-primary" href="{% url 'cart' %}">Go to Cart</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-lg-7">
+    <div class="card"><div class="card-body">
+      <h5 class="mb-3">Latest Reviews</h5>
+      {% if review_error %}<p class="text-danger small">{{ review_error }}</p>{% endif %}
+      {% for r in reviews %}
+        <div class="border rounded p-2 mb-2">
+          <div class="small text-warning">Rating: {{ r.rating }}/5</div>
+          <div class="small text-muted">Customer #{{ r.customer_id }}</div>
+          <div>{{ r.comment|default:'(No comment)' }}</div>
+        </div>
+      {% empty %}
+        <p class="text-muted">Chưa có review.</p>
+      {% endfor %}
+      <a href="{% url 'reviews' book.id %}" class="btn btn-sm btn-outline-secondary">View all reviews</a>
+    </div></div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card"><div class="card-body">
+      <h5 class="mb-3">Recommended Books</h5>
+      {% if rec_error %}<p class="text-danger small">{{ rec_error }}</p>{% endif %}
+      {% for r in recommendations %}
+        <div class="d-flex align-items-center gap-2 border rounded p-2 mb-2">
+          <img src="{{ r.book.display_image|default:'https://via.placeholder.com/80x100' }}" width="50" height="64" class="rounded" alt="{{ r.book.title }}">
+          <div>
+            <a href="{% url 'book-detail' r.book.id %}" class="fw-semibold text-decoration-none">{{ r.book.title }}</a>
+            <div class="small text-muted">Avg {{ r.avg_rating }} ({{ r.review_count }} reviews)</div>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-muted">No recommendation data.</p>
+      {% endfor %}
+    </div></div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
