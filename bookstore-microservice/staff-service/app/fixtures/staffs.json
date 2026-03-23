@@ -1,0 +1,4 @@
+[
+  {"model": "app.staff", "pk": 1, "fields": {"name": "Alice Nguyen", "email": "alice.staff@bookstore.com", "role": "staff", "department": "Content"}},
+  {"model": "app.staff", "pk": 2, "fields": {"name": "Brian Tran", "email": "brian.staff@bookstore.com", "role": "staff", "department": "Operations"}}
+]

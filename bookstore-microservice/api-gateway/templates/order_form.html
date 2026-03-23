@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Create Order | BookStore Gateway{% endblock %}
+{% block content %}
+<div class="grid cols-2">
+  <section class="card">
+    <h1>Create Order</h1>
+    <p class="muted">Form này gọi <code>order-service</code> để tạo đơn hàng và trigger payment + shipment.</p>
+    <form method="post" style="margin-top:14px;">
+      {% csrf_token %}
+      <div class="field">
+        <label>Customer ID</label>
+        <input name="customer_id" value="1" required>
+      </div>
+      <div class="field">
+        <label>Payment Method</label>
+        <select name="pay_method">
+          <option value="COD">COD</option>
+          <option value="CARD">CARD</option>
+          <option value="BANKING">BANKING</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Shipping Method</label>
+        <select name="ship_method">
+          <option value="STANDARD">STANDARD</option>
+          <option value="FAST">FAST</option>
+          <option value="EXPRESS">EXPRESS</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Shipping Address</label>
+        <input name="shipping_address" placeholder="123 Example Street" required>
+      </div>
+      <button class="btn" type="submit">Create Order</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Demo checklist</h2>
+    <ul class="muted">
+      <li>Customer đã có cart chưa?</li>
+      <li>Cart đã có item chưa?</li>
+      <li>Book price có hợp lệ không?</li>
+      <li>Pay + Ship service có đang chạy không?</li>
+    </ul>
+    <a class="btn secondary" href="/cart/1/">Open Cart #1</a>
+  </section>
+</div>
+{% endblock %}
