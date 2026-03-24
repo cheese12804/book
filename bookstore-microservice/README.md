@@ -65,6 +65,15 @@ docker compose run --rm api-gateway python manage.py migrate
 - `comment-rate-service`: load `app/fixtures/reviews.json` (>=5 review).
 - `cart-service`, `order-service`: không seed trực tiếp (theo flow nghiệp vụ).
 
+## Tài khoản mặc định api-gateway
+- Admin (Django admin/superuser):
+  - Email/username: `admin@bookstore.com`
+  - Password: `admin123`
+- Staff demo:
+  - Email/username: `staff@bookstore.com`
+  - Password: `staff123`
+  - Role: `staff` (gắn `staff_id=1`)
+
 ## 6. Danh sách endpoint chính
 - staff-service: `/staffs/`, `/staffs/<id>/`
 - manager-service: `/managers/`, `/managers/<id>/`
