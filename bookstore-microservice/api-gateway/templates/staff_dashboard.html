@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Staff Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="mb-0">Staff Dashboard - CRUD Books</h3>
+</div>
+{% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card"><div class="card-body">
+      <h5 class="mb-3">Add Book</h5>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-2"><label class="form-label">Title</label>{{ form.title }}</div>
+        <div class="mb-2"><label class="form-label">Author</label>{{ form.author }}</div>
+        <div class="row g-2 mb-2">
+          <div class="col-6"><label class="form-label">Price</label>{{ form.price }}</div>
+          <div class="col-6"><label class="form-label">Stock</label>{{ form.stock }}</div>
+        </div>
+        <div class="mb-2"><label class="form-label">Description</label>{{ form.description }}</div>
+        <div class="mb-2"><label class="form-label">Image URL</label>{{ form.image_url }}</div>
+        <button class="btn btn-primary w-100">Add Book</button>
+      </form>
+    </div></div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="card"><div class="card-body">
+      <h5 class="mb-3">Books</h5>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle">
+          <thead><tr><th>ID</th><th>Title</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+          <tbody>
+            {% for b in books %}
+            <tr>
+              <td>{{ b.id }}</td>
+              <td>{{ b.title }}</td>
+              <td>${{ b.price }}</td>
+              <td>{{ b.stock }}</td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'staff-book-edit' b.id %}">Edit</a>
+                <form method="post" action="{% url 'staff-book-delete' b.id %}" class="d-inline">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

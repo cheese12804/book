@@ -1,0 +1,56 @@
+body {
+  background: #f7f8fb;
+}
+
+.hero {
+  background: linear-gradient(135deg, #243b55, #141e30);
+}
+
+.quick-card {
+  display: block;
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 14px;
+  padding: 1rem;
+  color: inherit;
+  transition: 0.2s ease;
+}
+
+.quick-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.08);
+}
+
+.stat-card {
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(16, 24, 40, 0.06);
+}
+
+.book-card {
+  border-radius: 14px;
+  border: 1px solid #e9ecef;
+}
+
+.book-cover {
+  height: 250px;
+  object-fit: cover;
+}
+
+.detail-cover {
+  max-height: 520px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.empty-state {
+  border: 1px dashed #ced4da;
+  border-radius: 14px;
+}
+
+.review-item {
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+}
